@@ -39,6 +39,15 @@ window.addEventListener("error", (e) => {
   const el = document.getElementById("app");
   if (el) el.innerHTML = `<div style="padding:20px;font-family:monospace;font-size:13px;color:#C24C3D;white-space:pre-wrap;">SCRIPT ERROR:\n${e.message}\n\nFile: ${e.filename}\nLine: ${e.lineno}</div>`;
 });
+// Async/await errors (inside init(), event handlers, etc.) don't fire "error" above —
+// they show up here instead. Without this listener the page just stays blank white
+// with the real problem hidden in the browser console.
+window.addEventListener("unhandledrejection", (e) => {
+  const el = document.getElementById("app");
+  const msg = (e.reason && e.reason.message) ? e.reason.message : String(e.reason);
+  const stack = (e.reason && e.reason.stack) ? e.reason.stack : "";
+  if (el) el.innerHTML = `<div style="padding:20px;font-family:monospace;font-size:13px;color:#C24C3D;white-space:pre-wrap;">RUNTIME ERROR:\n${msg}\n\n${stack}</div>`;
+});
 
 /* =========================================================
    1) PASTE YOUR FIREBASE CONFIG HERE (from Firebase console)
@@ -706,7 +715,11 @@ function bindTab() {
     app.innerHTML = `<div style="padding:20px;font-family:monospace;font-size:13px;color:#C24C3D;white-space:pre-wrap;">DATA LOAD ERROR:\n${e.message}\n\nFirestore rules ya internet connection check karein.</div>`;
     return;
   }
-  render();
+  try {
+    render();
+  } catch (e) {
+    app.innerHTML = `<div style="padding:20px;font-family:monospace;font-size:13px;color:#C24C3D;white-space:pre-wrap;">RENDER ERROR:\n${e.message}\n\n${e.stack || ""}</div>`;
+  }
 })();
 </script>
 </body>
