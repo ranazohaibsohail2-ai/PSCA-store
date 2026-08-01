@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PSCA Store — Inventory System</title>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIlBTQ0EgU3RvcmUgSW52ZW50b3J5IiwgInNob3J0X25hbWUiOiAiUFNDQSBTdG9yZSIsICJkZXNjcmlwdGlvbiI6ICJMaXZlIHN0b2NrIHJlZ2lzdGVyIFx1MjAxNCBpbnZlbnRvcnksIGVtcGxveWVlcywgbGVkZ2VyLCByZXBvcnRzIiwgInN0YXJ0X3VybCI6ICIuLyIsICJzY29wZSI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRjJGMEU5IiwgInRoZW1lX2NvbG9yIjogIiMxQjJBNDEiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFNQUFBQURBQ0FJQUFBRGR2dnRRQUFBQ1prbEVRVlI0bk8zZHNVM0RVQlJBVVlPb1dJRUpZQVE2QnFDallKVnNSSkdPSGVoU3N3a1ZCUjFDYVJDNmRweHZ6cW1TeG5aeDlmd2pmY2NYTjNjUEUvekZZZmY1L2ZseXhldGdBd1JFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWdFUkNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJaEVRQ1FDSWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWdFUkhLMTlnWDg0djN0WmRIamY3dysvZng2L2JoZjlIVFROTjNlUHk5OWlsTXlnVWdFUkNJZ0VnR1JuUHNpK3Nqc0s5RERidG5qVDh2L0RsaVhDVVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFSWlBU0FaRUlpRVJBSkFJaUVSQ0pnRWdFUkNJZ0VnR1JETFluZXZiOXhVY1BGbTU3Ly9JU1RDQVNBWkVNZGd1YjNRa2VodDgyRTRoa3NBazA0bDlibkh0aGJnS1JDSWhFUUNRQ0loRVFpWUJJQkVRaUlCSUJrUWlJUkVBa0FpSVJFSW1BU0FSRUlpQVNBWkVJaUVSQUpBSWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkRQYkd3bTIvL1c5RUpoQ0pnRWdFUkNJZ2tuTmZSSS80bnU5L3hRUWlFUkNKZ0VnRVJDSWdFZ0dSQ0loRVFDUUNJaEVRaVlCSUJFUWlJQklCa1FpSVJFQWtBaUlSRUltQVNBUkVJaUFTQVpFSWlFUkFKQUlpRVJDSmdFZ0VSQ0lnRWdHUkNJaEVRQ1FDSWhFUWlZQklCRVFpSUJJQmtRaUlSRUFrQWlJUkVJbUFTQVJFSWlBU0FaRUlpT1FMeFlnYzRXVUVWckFBQUFBQVNVVk9SSzVDWUlJPSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn0seyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFnQUFBQUlBQ0FJQUFBQjdHa090QUFBSHBrbEVRVlI0bk8zY29YRUNVUlJBMFNTRG9vVlVRRXJBcFFBY2dsYlNFUUpIRHpnMG5hQWlVa0xJREpzUGU4L1JYN3hWZDk3TXpudDkvL2g4QVdCZXpsL2Z2NzU1KzRjNUFIaEFBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJBbEFBQlJBZ0FRSlFBQVVRSUFFQ1VBQUZFQ0FCQWxBQUJSQWdBUUpRQUFVUUlBRUNVQUFGRUNBQkFsQUFCUkFnQVFKUUFBVVFJQUVDVUFBRkVDQUJDMUdEMEFmM0E1N1VlUE1OTDF1TDN4NVhKem1IU1NSN1phNzBhUHdOT3dBUUJFQ1FCQWxBQUJSQWdBUUpRQUFFUUpBRUNVQUFCRUNRQkFsQUFBUkFrQVFKUUFBRVFKQUVDVUFBQkVDUUJBbEFBQVJBa0FRSlFBQUVRSkFFQ1VBQUJFdVFZNlQ3TThDWG4rdXZYbC9ENC9maWlXaWRnQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lCQUFnU2dBQW9nUUFJRW9BQUtJRUFDQktBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLSUVBQ0JLQUFDaUJBQWdTZ0FBb2dRQUlFb0FBS0lFQUNCS0FBQ2lGcU1Ib0JKWGs3NzBTUGMzUFc1dmZEbkx6NGU3c3dFQVJBa0FRSlFBQUVRSkFFQ1VBQUJFQ1FCUWZnUGxhU3czaDlFandLellBQUNpQkFBZ1NnQUFvZ1FBSUVvQUFLTDhCanBQcS9WdTlBaDBOejd1QjRNSGZzdUlnb1FZ" />
+<meta name="theme-color" content="#1B2A41" />
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAACZklEQVR4nO3dsU3DUBRAUYOoWIEJYAQ6BqCjYJVsRJGOHehSswkVBR1CaRC6dpxvzqmSxnZx9fwjfccXN3cPE/zFYff5/flyxetgAwREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERHK19gX84v3tZdHjf7w+/fx6/bhf9HTTNN3ePy99ilMygUgERCIgEgGRnPsi+sjsK9DDbtnjT8v/DliXCUQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRDLYnevb9xUcPFm57//ISTCASAZEMdgub3Qkeht82E4hksAk04l9bbHthbgKRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRDPbGwm2//W9EJhCJgEgERCIgknNfRI/4nu9/xQQiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiORLxYgc4WUEVrAAAAAASUVORK5CYII=" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PSCA Store" />
+<script src="https://cdn.tailwindcss.com" onerror="document.getElementById('app').innerHTML='<div style=\'padding:20px;font-family:monospace;color:#C24C3D;\'>Tailwind CDN load nahi hua. Internet check karein.</div>'"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" onerror="document.getElementById('app').innerHTML='<div style=\'padding:20px;font-family:monospace;color:#C24C3D;\'>Firebase app SDK load nahi hua (gstatic.com block ho sakta hai). VPN band kar ke ya doosra network try karein.</div>'"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" onerror="document.getElementById('app').innerHTML='<div style=\'padding:20px;font-family:monospace;color:#C24C3D;\'>Firebase Firestore SDK load nahi hua (gstatic.com block ho sakta hai).</div>'"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" onerror="document.getElementById('app').innerHTML='<div style=\'padding:20px;font-family:monospace;color:#C24C3D;\'>Excel library load nahi hui (cdnjs.cloudflare.com block ho sakta hai).</div>'"></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background:#F2F0E9; color:#1B2A41; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-mono { font-family: 'IBM Plex Mono', monospace; }
+  .card { background:white; border:1px solid #1B2A4114; border-radius:12px; }
+  .btn-primary { background:#1B2A41; color:#F2F0E9; }
+  .btn-accent { background:#E8A33D; color:#1B2A41; }
+  .btn-green { background:#3F7A5C; color:white; }
+  .btn-red { background:#C24C3D; color:white; }
+  input, select { border:1px solid #1B2A4126; border-radius:8px; padding:10px 14px; outline:none; background:white; width:100%; }
+  input:focus, select:focus { border-color:#E8A33D; }
+  @media print { .no-print { display:none !important; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// Show any error directly on the page (so it's visible on mobile without devtools).
+// This is placed FIRST, before anything else runs, so it catches every possible failure.
+window.addEventListener("error", (e) => {
+  const el = document.getElementById("app");
+  if (el) el.innerHTML = `<div style="padding:20px;font-family:monospace;font-size:13px;color:#C24C3D;white-space:pre-wrap;">SCRIPT ERROR:\n${e.message}\n\nFile: ${e.filename}\nLine: ${e.lineno}</div>`;
+});
+
+/* =========================================================
+   1) PASTE YOUR FIREBASE CONFIG HERE (from Firebase console)
+   ========================================================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyDcm_KU9sPs2eDjqFBBphHTOD6S83-GbTI",
+  authDomain: "psca-store.firebaseapp.com",
+  projectId: "psca-store",
+  storageBucket: "psca-store.firebasestorage.app",
+  messagingSenderId: "186719702982",
+  appId: "1:186719702982:web:3eb71b087479dd8a58acc7"
+};
+/* ========================================================= */
+
+let db;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+} catch (e) {
+  document.getElementById("app").innerHTML = `<div style="padding:20px;font-family:monospace;font-size:13px;color:#C24C3D;white-space:pre-wrap;">FIREBASE INIT ERROR:\n${e.message}\n\nFirebaseConfig ya Firestore setup check karein.</div>`;
+  throw e;
+}
+
+// ---------- State ----------
+let state = {
+  session: JSON.parse(localStorage.getItem("psca_session") || "null"),
+  tab: "dashboard",
+  storeName: "PSCA Store",
+  users: [],
+  items: [],
+  txns: [],
+  auditLog: [],
+};
+
+const app = document.getElementById("app");
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const fmt = (d) => new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
+const fmtTime = (d) => new Date(d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const qrUrl = (data) => `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(data)}`;
+
+// ---------- Firestore helpers ----------
+async function loadAllData() {
+  const [itemsSnap, txnsSnap, usersSnap, auditSnap, settingsSnap] = await Promise.all([
+    db.collection("items").orderBy("name").get(),
+    db.collection("transactions").orderBy("date", "desc").limit(300).get(),
+    db.collection("users").get(),
+    db.collection("auditLogs").orderBy("date", "desc").limit(300).get(),
+    db.collection("settings").doc("store").get(),
+  ]);
+  state.items = itemsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+  state.txns = txnsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+  state.users = usersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+  state.auditLog = auditSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+  if (settingsSnap.exists) state.storeName = settingsSnap.data().name;
+
+  if (state.users.length === 0) {
+    const adminRef = await db.collection("users").add({ name: "Admin", pin: "1234", role: "admin" });
+    state.users = [{ id: adminRef.id, name: "Admin", pin: "1234", role: "admin" }];
+  }
+}
+
+async function logAction(action) {
+  const entry = { action, by: state.session?.name || "System", date: new Date().toISOString() };
+  await db.collection("auditLogs").add(entry);
+  state.auditLog.unshift({ id: uid(), ...entry });
+}
+
+// ---------- Render root ----------
+function render() {
+  if (!state.session) { app.innerHTML = loginView(); bindLogin(); return; }
+  app.innerHTML = layoutView();
+  bindLayout();
+}
+
+// ================= LOGIN =================
+function loginView() {
+  return `
+  <div class="min-h-screen flex items-center justify-center px-5">
+    <div class="w-full max-w-sm">
+      <div class="text-center mb-6">
+        <p class="text-[10px] tracking-[0.2em] text-[#8A93A3] uppercase font-mono">Inventory System</p>
+        <h1 class="font-display text-3xl font-bold mt-1">${esc(state.storeName)}</h1>
+      </div>
+      <form id="loginForm" class="card p-5 space-y-3">
+        <div id="loginError" class="hidden text-xs text-[#C24C3D] bg-[#FBEFE9] border border-[#E08A72]/40 rounded-lg px-3 py-2"></div>
+        <input name="name" placeholder="Naam" required />
+        <input name="pin" type="password" inputmode="numeric" placeholder="PIN" required />
+        <button class="w-full py-3 rounded-lg font-display font-semibold btn-primary">Login</button>
+      </form>
+      <p class="text-[11px] text-[#8A93A3] text-center mt-3">Pehli baar? Naam "Admin", PIN "1234"</p>
+    </div>
+  </div>`;
+}
+function bindLogin() {
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const name = f.get("name").trim(), pin = f.get("pin").trim();
+    const errEl = document.getElementById("loginError");
+    const match = state.users.find(u => u.name.toLowerCase() === name.toLowerCase() && u.pin === pin);
+    if (!match) { errEl.textContent = "Naam ya PIN ghalat hai"; errEl.classList.remove("hidden"); return; }
+    state.session = match;
+    localStorage.setItem("psca_session", JSON.stringify(match));
+    render();
+  });
+}
+
+// ================= LAYOUT =================
+const TABS = [
+  { id: "dashboard", label: "Dashboard" },
+  { id: "inventory", label: "Inventory" },
+  { id: "employees", label: "Employees" },
+  { id: "ledger", label: "Ledger" },
+  { id: "reports", label: "Reports" },
+];
+function layoutView() {
+  const isAdmin = state.session.role === "admin";
+  const tabs = isAdmin ? [...TABS, { id: "audit", label: "Audit" }, { id: "users", label: "Users" }] : TABS;
+  const lowStock = state.items.filter(i => i.minQty != null && i.qty <= i.minQty);
+  const today = new Date().toDateString();
+  const todayTxns = state.txns.filter(t => new Date(t.date).toDateString() === today);
+  const todayIn = todayTxns.filter(t => ["in","return"].includes(t.type)).reduce((s,t)=>s+t.qty,0);
+  const todayOut = todayTxns.filter(t => ["out","issue"].includes(t.type)).reduce((s,t)=>s+t.qty,0);
+  const totalValue = state.items.reduce((s,i)=>s+(i.price?i.price*i.qty:0),0);
+
+  return `
+  <div class="min-h-screen pb-16">
+    <div class="bg-[#1B2A41] text-[#F2F0E9] px-5 md:px-10 pt-6 pb-8 relative overflow-hidden">
+      <div class="absolute right-0 top-0 h-full w-1.5 bg-[#E8A33D]"></div>
+      <div class="max-w-6xl mx-auto">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-[10px] tracking-[0.2em] text-[#8A93A3] uppercase font-mono">Live Stock Register</p>
+            <h1 class="font-display text-2xl md:text-3xl font-bold mt-0.5">${esc(state.storeName)}</h1>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="text-right">
+              <p class="text-sm font-medium">${esc(state.session.name)}</p>
+              <p class="text-[10px] text-[#8A93A3] uppercase">${state.session.role}</p>
+            </div>
+            <button id="logoutBtn" class="text-xs text-[#E8A33D]">Logout</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5">
+          <div class="bg-white/5 rounded-lg px-3 py-2.5 border border-white/10"><p class="text-[10px] text-[#8A93A3] uppercase">Items</p><p class="font-mono text-xl font-semibold">${state.items.length}</p></div>
+          <div class="bg-white/5 rounded-lg px-3 py-2.5 border border-white/10"><p class="text-[10px] text-[#8A93A3] uppercase">Value</p><p class="font-mono text-xl font-semibold">${totalValue?totalValue.toLocaleString():"—"}</p></div>
+          <div class="bg-white/5 rounded-lg px-3 py-2.5 border border-white/10"><p class="text-[10px] text-[#8A93A3] uppercase">Aaj In</p><p class="font-mono text-xl font-semibold text-[#7FC29B]">+${todayIn}</p></div>
+          <div class="bg-white/5 rounded-lg px-3 py-2.5 border border-white/10"><p class="text-[10px] text-[#8A93A3] uppercase">Aaj Out</p><p class="font-mono text-xl font-semibold text-[#E08A72]">-${todayOut}</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto">
+      <div class="flex px-5 md:px-10 -mt-4 mb-4 gap-2 overflow-x-auto relative z-10">
+        ${tabs.map(t => `<button data-tab="${t.id}" class="tabBtn shrink-0 px-4 py-2.5 rounded-lg text-sm font-medium font-display ${state.tab===t.id?"btn-primary":"bg-white text-[#1B2A41]/60 border border-[#1B2A41]/10"}">${t.label}</button>`).join("")}
+      </div>
+      <div id="tabContent" class="px-5 md:px-10">
+        ${lowStock.length>0 ? `<div class="mb-4 bg-[#FBEFE9] border border-[#E08A72]/40 rounded-lg px-3 py-2.5"><p class="text-xs text-[#8A3A2C]"><b>${lowStock.length} item(s)</b> kam stock: ${lowStock.map(i=>esc(i.name)).join(", ")}</p></div>` : ""}
+      </div>
+    </div>
+  </div>
+  <div id="modalRoot"></div>`;
+}
+
+function bindLayout() {
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    state.session = null; localStorage.removeItem("psca_session"); render();
+  });
+  document.querySelectorAll(".tabBtn").forEach(b => b.addEventListener("click", () => switchTab(b.dataset.tab)));
+  switchTab(state.tab);
+}
+
+async function refreshLayout() { await loadAllData(); const cur = state.tab; app.innerHTML = layoutView(); bindLayout(); state.tab = cur; document.querySelectorAll(".tabBtn").forEach(b=>{ b.className = `tabBtn shrink-0 px-4 py-2.5 rounded-lg text-sm font-medium font-display ${b.dataset.tab===cur?"btn-primary":"bg-white text-[#1B2A41]/60 border border-[#1B2A41]/10"}`; }); renderTabContent(); }
+
+function switchTab(tab) {
+  state.tab = tab;
+  document.querySelectorAll(".tabBtn").forEach(b => { b.className = `tabBtn shrink-0 px-4 py-2.5 rounded-lg text-sm font-medium font-display ${b.dataset.tab===tab?"btn-primary":"bg-white text-[#1B2A41]/60 border border-[#1B2A41]/10"}`; });
+  renderTabContent();
+}
+
+function renderTabContent() {
+  const content = document.getElementById("tabContent");
+  const lowStockBanner = content.querySelector(".bg-\\[\\#FBEFE9\\]")?.outerHTML || "";
+  let html = lowStockBanner;
+  if (state.tab === "dashboard") html += dashboardView();
+  if (state.tab === "inventory") html += inventoryView();
+  if (state.tab === "employees") html += employeesView();
+  if (state.tab === "ledger") html += ledgerView();
+  if (state.tab === "reports") html += reportsView();
+  if (state.tab === "audit") html += auditView();
+  if (state.tab === "users") html += usersView();
+  content.innerHTML = html;
+  bindTab();
+}
+
+// ================= DASHBOARD =================
+function dashboardView() {
+  return `<div class="card p-4"><p class="font-display font-semibold mb-3">Recent items</p>
+  <div class="space-y-2">${state.items.slice(0,6).map(i=>`<div class="flex justify-between text-sm border-b border-[#1B2A4110] pb-2"><span>${esc(i.name)}</span><span class="font-mono">${i.qty} ${esc(i.unit)}</span></div>`).join("") || `<p class="text-sm text-[#8A93A3]">Koi item nahi.</p>`}</div></div>`;
+}
+
+// ================= MODAL HELPERS =================
+function openModal(html) {
+  document.getElementById("modalRoot").innerHTML = `
+  <div class="fixed inset-0 bg-black/40 flex items-end md:items-center justify-center z-50 p-0 md:p-5" id="modalOverlay">
+    <div class="bg-white w-full md:max-w-md rounded-t-2xl md:rounded-2xl p-5 max-h-[90vh] overflow-y-auto">
+      ${html}
+    </div>
+  </div>`;
+  document.getElementById("modalOverlay").addEventListener("click", (e) => { if (e.target.id === "modalOverlay") closeModal(); });
+}
+function closeModal() {
+  const root = document.getElementById("modalRoot");
+  if (root) root.innerHTML = "";
+}
+
+// ================= INVENTORY =================
+function inventoryView() {
+  const isAdmin = state.session.role === "admin";
+  const q = (state.invSearch || "").toLowerCase();
+  const items = state.items.filter(i => !q || i.name.toLowerCase().includes(q) || (i.category || "").toLowerCase().includes(q));
+  return `
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3 gap-2">
+      <p class="font-display font-semibold">Inventory (${items.length})</p>
+      ${isAdmin ? `<button id="addItemBtn" class="btn-accent text-xs font-semibold px-3 py-2 rounded-lg font-display">+ Item</button>` : ""}
+    </div>
+    <input id="invSearch" placeholder="Item search karein..." value="${esc(state.invSearch || "")}" class="mb-3" />
+    <div class="space-y-2">
+      ${items.map(i => {
+        const low = i.minQty != null && i.qty <= i.minQty;
+        return `
+        <div class="border border-[#1B2A4110] rounded-lg p-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-medium text-sm">${esc(i.name)} ${low ? '<span class="text-[10px] text-[#C24C3D] font-mono ml-1">LOW</span>' : ''}</p>
+              <p class="text-[11px] text-[#8A93A3]">${esc(i.category || "—")} · ${i.price ? "Rs " + i.price : "—"}/${esc(i.unit)}</p>
+            </div>
+            <div class="text-right">
+              <p class="font-mono text-lg font-semibold ${low ? 'text-[#C24C3D]' : ''}">${i.qty}</p>
+              <p class="text-[10px] text-[#8A93A3]">${esc(i.unit)}</p>
+            </div>
+          </div>
+          <div class="flex gap-1.5 mt-2.5">
+            <button data-stock-in="${i.id}" class="flex-1 text-xs py-1.5 rounded-md btn-green font-medium">+ In</button>
+            <button data-stock-out="${i.id}" class="flex-1 text-xs py-1.5 rounded-md btn-red font-medium">− Out</button>
+            ${isAdmin ? `<button data-edit-item="${i.id}" class="px-2.5 py-1.5 rounded-md bg-[#1B2A410D] text-xs">✎</button>
+            <button data-del-item="${i.id}" class="px-2.5 py-1.5 rounded-md bg-[#1B2A410D] text-xs">🗑</button>` : ""}
+          </div>
+        </div>`;
+      }).join("") || `<p class="text-sm text-[#8A93A3] py-6 text-center">Koi item nahi mila.</p>`}
+    </div>
+  </div>`;
+}
+
+function itemFormModal(item) {
+  const isEdit = !!item;
+  openModal(`
+    <p class="font-display font-semibold mb-3">${isEdit ? "Item edit karein" : "Naya item"}</p>
+    <form id="itemForm" class="space-y-2.5">
+      <input name="name" placeholder="Item ka naam" value="${isEdit ? esc(item.name) : ""}" required />
+      <input name="category" placeholder="Category" value="${isEdit ? esc(item.category || "") : ""}" />
+      <div class="grid grid-cols-2 gap-2">
+        <input name="qty" type="number" step="any" placeholder="Qty" value="${isEdit ? item.qty : ""}" required />
+        <input name="unit" placeholder="Unit (pcs/kg)" value="${isEdit ? esc(item.unit || "") : ""}" required />
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <input name="minQty" type="number" step="any" placeholder="Min qty (alert)" value="${isEdit && item.minQty != null ? item.minQty : ""}" />
+        <input name="price" type="number" step="any" placeholder="Price/unit" value="${isEdit && item.price != null ? item.price : ""}" />
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="cancelModal" class="flex-1 py-2.5 rounded-lg bg-[#1B2A410D] font-display font-medium">Cancel</button>
+        <button class="flex-1 py-2.5 rounded-lg btn-primary font-display font-medium">${isEdit ? "Save" : "Add"}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById("cancelModal").addEventListener("click", closeModal);
+  document.getElementById("itemForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const data = {
+      name: f.get("name").trim(),
+      category: f.get("category").trim(),
+      unit: f.get("unit").trim(),
+      qty: parseFloat(f.get("qty")) || 0,
+      minQty: f.get("minQty") ? parseFloat(f.get("minQty")) : null,
+      price: f.get("price") ? parseFloat(f.get("price")) : null,
+    };
+    if (isEdit) {
+      await db.collection("items").doc(item.id).update(data);
+      await logAction(`Item update: ${data.name}`);
+    } else {
+      await db.collection("items").add(data);
+      await logAction(`Naya item: ${data.name}`);
+    }
+    closeModal();
+    await refreshLayout();
+  });
+}
+
+function stockModal(item, dir) {
+  if (!item) return;
+  const isIn = dir === "in";
+  openModal(`
+    <p class="font-display font-semibold mb-1">${esc(item.name)}</p>
+    <p class="text-xs text-[#8A93A3] mb-3">Mojooda stock: <b class="font-mono">${item.qty} ${esc(item.unit)}</b></p>
+    <form id="stockForm" class="space-y-2.5">
+      <input name="qty" type="number" step="any" min="0.0001" placeholder="Quantity" required />
+      ${isIn
+        ? `<select name="type"><option value="in">Stock In</option><option value="return">Return</option></select>`
+        : `<select name="type"><option value="out">Stock Out</option><option value="issue">Issue (employee)</option></select>`}
+      <input name="note" placeholder="Note (optional)" />
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="cancelModal" class="flex-1 py-2.5 rounded-lg bg-[#1B2A410D] font-display font-medium">Cancel</button>
+        <button class="flex-1 py-2.5 rounded-lg ${isIn ? "btn-green" : "btn-red"} font-display font-medium">Confirm</button>
+      </div>
+    </form>
+  `);
+  document.getElementById("cancelModal").addEventListener("click", closeModal);
+  document.getElementById("stockForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const qty = parseFloat(f.get("qty"));
+    const type = f.get("type");
+    const note = f.get("note").trim();
+    if (!qty || qty <= 0) return;
+    if (!isIn && qty > item.qty) { alert("Stock itna nahi hai."); return; }
+    const newQty = isIn ? item.qty + qty : item.qty - qty;
+    await db.collection("items").doc(item.id).update({ qty: newQty });
+    await db.collection("transactions").add({
+      itemId: item.id, itemName: item.name, qty, type, note,
+      by: state.session.name, date: new Date().toISOString(),
+    });
+    await logAction(`${type.toUpperCase()}: ${item.name} (${qty} ${item.unit})`);
+    closeModal();
+    await refreshLayout();
+  });
+}
+
+// ================= EMPLOYEES =================
+function employeesView() {
+  const isAdmin = state.session.role === "admin";
+  const employees = state.users.filter(u => u.role === "employee");
+  return `
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <p class="font-display font-semibold">Employees (${employees.length})</p>
+      ${isAdmin ? `<button id="addEmpBtn" class="btn-accent text-xs font-semibold px-3 py-2 rounded-lg font-display">+ Employee</button>` : ""}
+    </div>
+    <div class="space-y-2">
+      ${employees.map(u => `
+        <div class="flex items-center justify-between border border-[#1B2A4110] rounded-lg p-3">
+          <div>
+            <p class="font-medium text-sm">${esc(u.name)}</p>
+            <p class="text-[11px] text-[#8A93A3] font-mono uppercase">PIN: ${esc(u.pin)}</p>
+          </div>
+          ${isAdmin ? `<div class="flex gap-1.5">
+            <button data-edit-emp="${u.id}" class="px-2.5 py-1.5 rounded-md bg-[#1B2A410D] text-xs">✎</button>
+            <button data-del-emp="${u.id}" class="px-2.5 py-1.5 rounded-md bg-[#1B2A410D] text-xs">🗑</button>
+          </div>` : ""}
+        </div>`).join("") || `<p class="text-sm text-[#8A93A3] py-6 text-center">Koi employee nahi.</p>`}
+    </div>
+  </div>`;
+}
+
+function empFormModal(emp) {
+  const isEdit = !!emp;
+  openModal(`
+    <p class="font-display font-semibold mb-3">${isEdit ? "Employee edit karein" : "Naya employee"}</p>
+    <form id="empForm" class="space-y-2.5">
+      <input name="name" placeholder="Naam" value="${isEdit ? esc(emp.name) : ""}" required />
+      <input name="pin" placeholder="PIN" value="${isEdit ? esc(emp.pin) : ""}" required />
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="cancelModal" class="flex-1 py-2.5 rounded-lg bg-[#1B2A410D] font-display font-medium">Cancel</button>
+        <button class="flex-1 py-2.5 rounded-lg btn-primary font-display font-medium">${isEdit ? "Save" : "Add"}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById("cancelModal").addEventListener("click", closeModal);
+  document.getElementById("empForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const data = { name: f.get("name").trim(), pin: f.get("pin").trim(), role: "employee" };
+    if (isEdit) {
+      await db.collection("users").doc(emp.id).update(data);
+      await logAction(`Employee update: ${data.name}`);
+    } else {
+      await db.collection("users").add(data);
+      await logAction(`Naya employee: ${data.name}`);
+    }
+    closeModal();
+    await refreshLayout();
+  });
+}
+
+// ================= USERS (admin accounts + roles) =================
+function usersView() {
+  return `
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <p class="font-display font-semibold">Users (${state.users.length})</p>
+      <button id="addUserBtn" class="btn-accent text-xs font-semibold px-3 py-2 rounded-lg font-display">+ User</button>
+    </div>
+    <div class="space-y-2">
+      ${state.users.map(u => `
+        <div class="flex items-center justify-between border border-[#1B2A4110] rounded-lg p-3">
+          <div>
+            <p class="font-medium text-sm">${esc(u.name)} <span class="text-[10px] text-[#8A93A3] uppercase">(${esc(u.role)})</span></p>
+            <p class="text-[11px] text-[#8A93A3] font-mono">PIN: ${esc(u.pin)}</p>
+          </div>
+          <div class="flex gap-1.5">
+            <button data-edit-user="${u.id}" class="px-2.5 py-1.5 rounded-md bg-[#1B2A410D] text-xs">✎</button>
+            ${state.users.length > 1 ? `<button data-del-user="${u.id}" class="px-2.5 py-1.5 rounded-md bg-[#1B2A410D] text-xs">🗑</button>` : ""}
+          </div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+function userFormModal(u) {
+  const isEdit = !!u;
+  openModal(`
+    <p class="font-display font-semibold mb-3">${isEdit ? "User edit karein" : "Naya user"}</p>
+    <form id="userForm" class="space-y-2.5">
+      <input name="name" placeholder="Naam" value="${isEdit ? esc(u.name) : ""}" required />
+      <input name="pin" placeholder="PIN" value="${isEdit ? esc(u.pin) : ""}" required />
+      <select name="role">
+        <option value="employee" ${isEdit && u.role === "employee" ? "selected" : ""}>Employee</option>
+        <option value="admin" ${isEdit && u.role === "admin" ? "selected" : ""}>Admin</option>
+      </select>
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="cancelModal" class="flex-1 py-2.5 rounded-lg bg-[#1B2A410D] font-display font-medium">Cancel</button>
+        <button class="flex-1 py-2.5 rounded-lg btn-primary font-display font-medium">${isEdit ? "Save" : "Add"}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById("cancelModal").addEventListener("click", closeModal);
+  document.getElementById("userForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const data = { name: f.get("name").trim(), pin: f.get("pin").trim(), role: f.get("role") };
+    if (isEdit) {
+      await db.collection("users").doc(u.id).update(data);
+      await logAction(`User update: ${data.name}`);
+      if (state.session.id === u.id) {
+        state.session = { ...state.session, ...data };
+        localStorage.setItem("psca_session", JSON.stringify(state.session));
+      }
+    } else {
+      await db.collection("users").add(data);
+      await logAction(`Naya user: ${data.name}`);
+    }
+    closeModal();
+    await refreshLayout();
+  });
+}
+
+// ================= LEDGER =================
+function ledgerView() {
+  const filter = state.ledgerFilter || "all";
+  const txns = state.txns.filter(t => filter === "all" || t.type === filter);
+  return `
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3 gap-2">
+      <p class="font-display font-semibold">Ledger</p>
+      <button id="addTxnBtn" class="btn-accent text-xs font-semibold px-3 py-2 rounded-lg font-display">+ Entry</button>
+    </div>
+    <select id="ledgerFilter" class="mb-3">
+      <option value="all" ${filter === "all" ? "selected" : ""}>Sab types</option>
+      <option value="in" ${filter === "in" ? "selected" : ""}>Stock In</option>
+      <option value="out" ${filter === "out" ? "selected" : ""}>Stock Out</option>
+      <option value="issue" ${filter === "issue" ? "selected" : ""}>Issue</option>
+      <option value="return" ${filter === "return" ? "selected" : ""}>Return</option>
+    </select>
+    <div class="space-y-2">
+      ${txns.map(t => {
+        const isPlus = ["in", "return"].includes(t.type);
+        return `
+        <div class="flex items-center justify-between border border-[#1B2A4110] rounded-lg p-3">
+          <div>
+            <p class="font-medium text-sm">${esc(t.itemName)}</p>
+            <p class="text-[11px] text-[#8A93A3]">${fmt(t.date)} · ${fmtTime(t.date)} · ${esc(t.by)}${t.note ? " · " + esc(t.note) : ""}</p>
+          </div>
+          <p class="font-mono text-sm font-semibold ${isPlus ? "text-[#3F7A5C]" : "text-[#C24C3D]"}">${isPlus ? "+" : "−"}${t.qty}</p>
+        </div>`;
+      }).join("") || `<p class="text-sm text-[#8A93A3] py-6 text-center">Koi entry nahi.</p>`}
+    </div>
+  </div>`;
+}
+
+function txnFormModal() {
+  if (state.items.length === 0) { alert("Pehle koi item add karein."); return; }
+  openModal(`
+    <p class="font-display font-semibold mb-3">Nayi ledger entry</p>
+    <form id="txnForm" class="space-y-2.5">
+      <select name="itemId" required>
+        <option value="">Item chunein</option>
+        ${state.items.map(i => `<option value="${i.id}">${esc(i.name)} (${i.qty} ${esc(i.unit)})</option>`).join("")}
+      </select>
+      <select name="type" required>
+        <option value="in">Stock In</option>
+        <option value="out">Stock Out</option>
+        <option value="issue">Issue (employee)</option>
+        <option value="return">Return</option>
+      </select>
+      <input name="qty" type="number" step="any" min="0.0001" placeholder="Quantity" required />
+      <input name="note" placeholder="Note (optional)" />
+      <div class="flex gap-2 pt-2">
+        <button type="button" id="cancelModal" class="flex-1 py-2.5 rounded-lg bg-[#1B2A410D] font-display font-medium">Cancel</button>
+        <button class="flex-1 py-2.5 rounded-lg btn-primary font-display font-medium">Save</button>
+      </div>
+    </form>
+  `);
+  document.getElementById("cancelModal").addEventListener("click", closeModal);
+  document.getElementById("txnForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const itemId = f.get("itemId");
+    const item = state.items.find(i => i.id === itemId);
+    if (!item) return;
+    const qty = parseFloat(f.get("qty"));
+    const type = f.get("type");
+    const note = f.get("note").trim();
+    if (!qty || qty <= 0) return;
+    const isIn = ["in", "return"].includes(type);
+    if (!isIn && qty > item.qty) { alert("Stock itna nahi hai."); return; }
+    const newQty = isIn ? item.qty + qty : item.qty - qty;
+    await db.collection("items").doc(item.id).update({ qty: newQty });
+    await db.collection("transactions").add({
+      itemId: item.id, itemName: item.name, qty, type, note,
+      by: state.session.name, date: new Date().toISOString(),
+    });
+    await logAction(`${type.toUpperCase()}: ${item.name} (${qty} ${item.unit})`);
+    closeModal();
+    await refreshLayout();
+  });
+}
+
+// ================= REPORTS =================
+function reportsView() {
+  const totalValue = state.items.reduce((s, i) => s + (i.price ? i.price * i.qty : 0), 0);
+  const lowStock = state.items.filter(i => i.minQty != null && i.qty <= i.minQty);
+  return `
+  <div class="space-y-3">
+    <div class="card p-4">
+      <p class="font-display font-semibold mb-3">Summary</p>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="border border-[#1B2A4110] rounded-lg p-3"><p class="text-[10px] text-[#8A93A3] uppercase">Total Items</p><p class="font-mono text-xl font-semibold">${state.items.length}</p></div>
+        <div class="border border-[#1B2A4110] rounded-lg p-3"><p class="text-[10px] text-[#8A93A3] uppercase">Total Value</p><p class="font-mono text-xl font-semibold">${totalValue ? totalValue.toLocaleString() : "—"}</p></div>
+        <div class="border border-[#1B2A4110] rounded-lg p-3"><p class="text-[10px] text-[#8A93A3] uppercase">Low Stock</p><p class="font-mono text-xl font-semibold text-[#C24C3D]">${lowStock.length}</p></div>
+        <div class="border border-[#1B2A4110] rounded-lg p-3"><p class="text-[10px] text-[#8A93A3] uppercase">Ledger Entries</p><p class="font-mono text-xl font-semibold">${state.txns.length}</p></div>
+      </div>
+    </div>
+    <div class="card p-4">
+      <p class="font-display font-semibold mb-3">Export</p>
+      <div class="flex flex-col gap-2">
+        <button id="exportInventoryBtn" class="py-2.5 rounded-lg btn-primary font-display font-medium text-sm">Inventory (Excel)</button>
+        <button id="exportLedgerBtn" class="py-2.5 rounded-lg btn-primary font-display font-medium text-sm">Ledger (Excel)</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function exportInventory() {
+  const rows = state.items.map(i => ({ Name: i.name, Category: i.category || "", Qty: i.qty, Unit: i.unit, MinQty: i.minQty ?? "", Price: i.price ?? "", Value: i.price ? i.price * i.qty : "" }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Inventory");
+  XLSX.writeFile(wb, `${state.storeName.replace(/\s+/g, "_")}_inventory_${Date.now()}.xlsx`);
+}
+function exportLedger() {
+  const rows = state.txns.map(t => ({ Date: fmt(t.date), Time: fmtTime(t.date), Item: t.itemName, Type: t.type, Qty: t.qty, By: t.by, Note: t.note || "" }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Ledger");
+  XLSX.writeFile(wb, `${state.storeName.replace(/\s+/g, "_")}_ledger_${Date.now()}.xlsx`);
+}
+
+// ================= AUDIT =================
+function auditView() {
+  return `
+  <div class="card p-4">
+    <p class="font-display font-semibold mb-3">Audit Log</p>
+    <div class="space-y-2">
+      ${state.auditLog.map(a => `
+        <div class="border-b border-[#1B2A4110] pb-2">
+          <p class="text-sm">${esc(a.action)}</p>
+          <p class="text-[11px] text-[#8A93A3]">${fmt(a.date)} · ${fmtTime(a.date)} · ${esc(a.by)}</p>
+        </div>`).join("") || `<p class="text-sm text-[#8A93A3] py-6 text-center">Koi log nahi.</p>`}
+    </div>
+  </div>`;
+}
+
+// ================= EVENT BINDING FOR ALL TABS =================
+function bindTab() {
+  const content = document.getElementById("tabContent");
+  if (!content) return;
+
+  // Inventory
+  const invSearch = document.getElementById("invSearch");
+  if (invSearch) {
+    invSearch.addEventListener("input", (e) => {
+      state.invSearch = e.target.value;
+      renderTabContent();
+      const el = document.getElementById("invSearch");
+      if (el) { el.focus(); el.selectionStart = el.selectionEnd = el.value.length; }
+    });
+  }
+  const addItemBtn = document.getElementById("addItemBtn");
+  if (addItemBtn) addItemBtn.addEventListener("click", () => itemFormModal(null));
+  content.querySelectorAll("[data-edit-item]").forEach(b => b.addEventListener("click", () => itemFormModal(state.items.find(i => i.id === b.dataset.editItem))));
+  content.querySelectorAll("[data-del-item]").forEach(b => b.addEventListener("click", async () => {
+    if (!confirm("Ye item delete karein?")) return;
+    const item = state.items.find(i => i.id === b.dataset.delItem);
+    await db.collection("items").doc(b.dataset.delItem).delete();
+    await logAction(`Item delete: ${item?.name || ""}`);
+    await refreshLayout();
+  }));
+  content.querySelectorAll("[data-stock-in]").forEach(b => b.addEventListener("click", () => stockModal(state.items.find(i => i.id === b.dataset.stockIn), "in")));
+  content.querySelectorAll("[data-stock-out]").forEach(b => b.addEventListener("click", () => stockModal(state.items.find(i => i.id === b.dataset.stockOut), "out")));
+
+  // Employees
+  const addEmpBtn = document.getElementById("addEmpBtn");
+  if (addEmpBtn) addEmpBtn.addEventListener("click", () => empFormModal(null));
+  content.querySelectorAll("[data-edit-emp]").forEach(b => b.addEventListener("click", () => empFormModal(state.users.find(u => u.id === b.dataset.editEmp))));
+  content.querySelectorAll("[data-del-emp]").forEach(b => b.addEventListener("click", async () => {
+    if (!confirm("Ye employee delete karein?")) return;
+    const u = state.users.find(x => x.id === b.dataset.delEmp);
+    await db.collection("users").doc(b.dataset.delEmp).delete();
+    await logAction(`Employee delete: ${u?.name || ""}`);
+    await refreshLayout();
+  }));
+
+  // Users
+  const addUserBtn = document.getElementById("addUserBtn");
+  if (addUserBtn) addUserBtn.addEventListener("click", () => userFormModal(null));
+  content.querySelectorAll("[data-edit-user]").forEach(b => b.addEventListener("click", () => userFormModal(state.users.find(u => u.id === b.dataset.editUser))));
+  content.querySelectorAll("[data-del-user]").forEach(b => b.addEventListener("click", async () => {
+    if (b.dataset.delUser === state.session.id) { alert("Apna hi account delete nahi kar sakte."); return; }
+    if (!confirm("Ye user delete karein?")) return;
+    const u = state.users.find(x => x.id === b.dataset.delUser);
+    await db.collection("users").doc(b.dataset.delUser).delete();
+    await logAction(`User delete: ${u?.name || ""}`);
+    await refreshLayout();
+  }));
+
+  // Ledger
+  const addTxnBtn = document.getElementById("addTxnBtn");
+  if (addTxnBtn) addTxnBtn.addEventListener("click", () => txnFormModal());
+  const ledgerFilter = document.getElementById("ledgerFilter");
+  if (ledgerFilter) ledgerFilter.addEventListener("change", (e) => { state.ledgerFilter = e.target.value; renderTabContent(); });
+
+  // Reports
+  const exportInventoryBtn = document.getElementById("exportInventoryBtn");
+  if (exportInventoryBtn) exportInventoryBtn.addEventListener("click", exportInventory);
+  const exportLedgerBtn = document.getElementById("exportLedgerBtn");
+  if (exportLedgerBtn) exportLedgerBtn.addEventListener("click", exportLedger);
+}
+
+// ================= APP INIT =================
+(async function init() {
+  try {
+    await loadAllData();
+  } catch (e) {
+    app.innerHTML = `<div style="padding:20px;font-family:monospace;font-size:13px;color:#C24C3D;white-space:pre-wrap;">DATA LOAD ERROR:\n${e.message}\n\nFirestore rules ya internet connection check karein.</div>`;
+    return;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
